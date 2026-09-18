@@ -1,39 +1,118 @@
-# --- Python / backend ---
+# ==============================================================================
+# VeriShield AI — .gitignore
+# ==============================================================================
+
+# --- Environment files & Secrets ---
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+*id_rsa*
+*id_ed25519*
+credentials.json
+client_secret*.json
+
+# --- Python & Bytecode ---
 __pycache__/
 *.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
+.installed.cfg
+*.egg
+
+# --- Virtual Environments ---
 .venv/
 venv/
+ENV/
 env/
+
+# --- Testing & Code Quality Caches ---
+.pytest_cache/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+
+# --- Databases & Local Storage ---
 *.db
+*.sqlite
 *.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+backend/app/database/*.db
+backend/app/database/*.sqlite
+backend/app/database/*.sqlite3
+!backend/app/database/.gitkeep
+
+# --- Uploads & Temporary Directories ---
 backend/app/uploads_tmp/*
 !backend/app/uploads_tmp/.gitkeep
-backend/app/database/*.db
+uploads/
+tmp/
+temp/
 
-# --- Environment files ---
-.env
-backend/.env
-frontend/.env
-
-# --- Node / frontend ---
+# --- Node / Frontend ---
 node_modules/
 frontend/node_modules/
+dist/
 frontend/dist/
 frontend/.vite/
+.vite/
+.npm/
+*.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# --- Docker ---
+# --- Docker & Logs ---
+*.log
+logs/
 docker/*.log
 
-# --- OS / editor ---
+# --- OS & Editor Metadata ---
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
 .vscode/
 .idea/
 *.swp
-
-# --- Logs ---
-*.log
+*.swo
+*~
