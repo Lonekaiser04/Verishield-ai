@@ -40,7 +40,7 @@
 5. [Complete Architecture and Workflow](#complete-architecture-and-workflow)
    - [End-to-End Processing Pipeline](#end-to-end-processing-pipeline)
    - [Repository Layout](#repository-layout)
-6. [Actual Technology Stack](#actual-technology-stack)
+6. [Technology Stack](#technology-stack)
 7. [Installation and Setup](#installation-and-setup)
    - [Prerequisites](#prerequisites)
    - [Backend Setup](#backend-setup)
@@ -227,107 +227,36 @@ The screening pipeline (`backend/app/services/pipeline_service.py`) orchestrates
 VeriShield AI/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py                     # FastAPI application, CORS, lifespan & health routes
-│   │   ├── api/
-│   │   │   ├── screening_routes.py     # End-to-end /screen and individual module endpoints
-│   │   │   └── demo_routes.py          # /demo/scenarios and /demo/seed/{id} endpoints
-│   │   ├── config/
-│   │   │   └── settings.py             # App configuration, env variables & risk weights
-│   │   ├── database/
-│   │   │   ├── session.py              # SQLAlchemy engine, session maker & init_db
-│   │   │   └── .gitkeep
-│   │   ├── models/
-│   │   │   └── screening.py            # SQLAlchemy Screening & Document ORM models
-│   │   ├── schemas/
-│   │   │   └── screening.py            # Pydantic schemas for requests, responses & enums
-│   │   ├── services/
-│   │   │   ├── pipeline_service.py     # Orchestrates modules 2-8 into screening pipeline
-│   │   │   ├── document_classifier.py  # Rule-based regex/keyword document classifier
-│   │   │   ├── ocr_service.py          # EasyOCR & Tesseract text extraction service
-│   │   │   ├── field_extraction_service.py # Per-document field extractors & TD3 MRZ parser
-│   │   │   ├── validation_service.py   # Document format, checksum, and date validators
-│   │   │   ├── tampering_service.py    # 5-signal forensic tampering & anomaly detector
-│   │   │   ├── face_service.py         # Haar cascade detector & MobileNetV3 face embedding
-│   │   │   ├── cross_document_service.py # Multi-document identity cross-checking service
-│   │   │   ├── risk_service.py         # 6-category weighted scoring & escalation engine
-│   │   │   ├── storage_service.py      # Upload validation, saving, and auto-deletion
-│   │   │   └── demo_data.py            # Synthetic demo scenarios & ground-truth text
-│   │   └── utils/
-│   │       └── image_utils.py          # OpenCV preprocessing (resize, denoise, CLAHE, deskew)
-│   ├── tests/
-│   │   ├── test_screening.py           # 12 automated pytest suites covering all modules
-│   │   └── verify_e2e.py               # Standalone end-to-end pipeline verification script
-│   ├── requirements.txt                # Python backend dependencies
-│   └── .env.example                    # Backend environment configuration template
+│   │   ├── api/             # REST endpoints (screening, demo, modular analysis)
+│   │   ├── config/          # Application settings & risk weight profiles
+│   │   ├── database/        # SQLAlchemy engine, session maker & models
+│   │   ├── schemas/         # Pydantic validation schemas
+│   │   ├── services/        # Pipeline, OCR, forensics, face biometrics & risk engine
+│   │   └── utils/           # OpenCV image preprocessing (denoise, CLAHE, deskew)
+│   ├── tests/               # Pytest suite & E2E verification scripts
+│   └── requirements.txt     # Backend Python dependencies
 ├── frontend/
 │   ├── src/
-│   │   ├── components/                 # UI components: DropZone, RiskGauge, RiskBadge, Layout...
-│   │   ├── pages/
-│   │   │   ├── Dashboard.jsx           # Aggregate stats, charts, recent screenings list
-│   │   │   ├── NewScreening.jsx        # File upload form & demo scenario selector tabs
-│   │   │   ├── Results.jsx             # Comprehensive forensic report & visual inspection
-│   │   │   ├── History.jsx             # Filterable and searchable past screening history
-│   │   │   └── SystemInfo.jsx          # System configuration, capabilities & disclaimers
-│   │   ├── services/
-│   │   │   └── api.js                  # Axios client calling backend API endpoints
-│   │   ├── App.jsx                     # Route definitions & navigation
-│   │   ├── main.jsx                    # React application entrypoint
-│   │   └── index.css                   # Tailwind CSS imports & global styles
-│   ├── package.json                    # Node dependencies & build scripts
-│   ├── vite.config.js                  # Vite server & backend API proxy configuration
-│   ├── tailwind.config.js              # Tailwind CSS theme settings
-│   └── .env.example                    # Frontend environment configuration template
+│   │   ├── components/      # UI components (DropZone, RiskGauge, RiskBadge, Layout)
+│   │   ├── pages/           # Pages (Dashboard, NewScreening, Results, History, SystemInfo)
+│   │   └── services/        # Axios API client
+│   └── package.json         # Node dependencies & Vite build setup
 ├── datasets/
-│   ├── demo_documents/                 # Bundled synthetic watermarked test documents
-│   └── README.md                       # Synthetic dataset ethics and generation documentation
-├── docker/
-│   ├── Dockerfile.backend              # Python 3.11-slim backend container definition
-│   ├── Dockerfile.frontend             # Multi-stage Node 20 build -> Nginx frontend container
-│   └── nginx.conf                      # Nginx reverse proxy configuration
-├── docs/
-│   └── ARCHITECTURE.md                 # Technical extension guide for new document types
-├── docker-compose.yml                  # Full-stack container deployment orchestrator
-├── .gitignore                          # Exclusion rules for secrets, DBs, caches & artifacts
-├── LICENSE                             # MIT License
-└── README.md                           # Comprehensive project documentation
+│   └── demo_documents/      # Bundled synthetic watermarked test documents
+├── docker/                  # Dockerfiles for backend, frontend & Nginx config
+└── docker-compose.yml       # Multi-container orchestration
 ```
 
 ---
 
-## Actual Technology Stack
+## Technology Stack
 
-### Frontend
-- **React 18.3.1**: Component-based user interface.
-- **Vite 6.0.5**: Build tool and development server with API proxying.
-- **Tailwind CSS 3.4.17**: Utility-first styling for layouts, cards, and risk badges.
-- **React Router DOM 6.28.0**: Client-side routing (`/`, `/screen`, `/results/:id`, `/history`, `/system`).
-- **Recharts 2.13.3**: Interactive risk distribution and dashboard analytics charts.
-- **Lucide React 0.468.0**: Icons across all navigation, status badges, and forensic panels.
-- **Axios 1.7.9**: Promise-based HTTP client for backend REST communication.
-
-### Backend
-- **Python 3.10 / 3.11**: Primary runtime language.
-- **FastAPI 0.115.6**: Asynchronous web framework with automatic OpenAPI/Swagger generation.
-- **Uvicorn 0.34.0**: ASGI web server.
-- **Pydantic 2.10.4**: Data validation and request/response serialization.
-- **SQLAlchemy 2.0.36**: Database ORM and schema management.
-- **python-multipart 0.0.20**: Streaming multipart form-data parser for file uploads.
-- **python-dotenv 1.0.1**: Environment variable management.
-
-### Computer Vision, OCR & Biometrics
-- **OpenCV (`opencv-python-headless` 4.10.0.84)**: Image loading, denoising, CLAHE enhancement, deskewing, Canny edge detection, and Haar Cascade face detection.
-- **NumPy 1.26.4**: Numerical arrays for image manipulation, DCT variance, and embedding normalization.
-- **Pillow (PIL) 11.0.0**: Image format conversion, Error Level Analysis (ELA) re-compression, and EXIF extraction.
-- **PyMuPDF (`fitz` 1.25.1)**: Multi-page PDF document page rasterization.
-- **EasyOCR 2.9.1**: CRAFT text detection and CRNN character recognition running on CPU/GPU.
-- **Tesseract OCR (`pytesseract`)**: Secondary local OCR fallback engine.
-- **PyTorch & Torchvision (`torch`, `torchvision`)**: MobileNetV3-Small convolutional neural network for 1024-dimensional face embedding extraction.
-- **Python Standard Library `difflib`**: SequenceMatcher for fuzzy name similarity comparison.
-
-### Database & Deployment
-- **SQLite**: Default zero-setup local persistent database.
-- **PostgreSQL**: Supported via `DATABASE_URL` DSN configuration without code changes.
-- **Docker & Docker Compose**: Multi-container orchestration (Backend on port 8000, Frontend on port 8080 via Nginx).
+- **Frontend**: React 18, Vite 6, Tailwind CSS, Recharts, Lucide Icons
+- **Backend API**: Python 3.10+, FastAPI, Uvicorn, Pydantic, SQLAlchemy
+- **Computer Vision & Forensics**: OpenCV, Pillow (PIL), PyMuPDF (PDF rendering)
+- **OCR Engines**: EasyOCR (PyTorch CRAFT + CRNN), Tesseract OCR fallback
+- **Biometrics & AI**: PyTorch MobileNetV3 (1024-d face embeddings), Haar Cascade face detection
+- **Storage & Infrastructure**: SQLite (PostgreSQL-ready), Docker, Docker Compose, Nginx Reverse Proxy
 
 ---
 
@@ -434,24 +363,18 @@ docker compose down
 
 ## API Endpoints
 
-FastAPI auto-generates comprehensive interactive documentation at `/docs` (Swagger UI) and `/redoc` (ReDoc).
+The FastAPI backend automatically generates interactive documentation at `/docs` (Swagger UI) and `/redoc`.
 
-| HTTP Method | Path | Summary / Description |
+| Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/api/screen` | **Full End-to-End Screening**: Ingests 1+ document files (`documents`) and an optional selfie (`person_photo`), executes the full pipeline, and returns a comprehensive `ScreeningResultResponse`. |
-| `POST` | `/api/documents/detect` | Standalone document classification from an uploaded image. |
-| `POST` | `/api/documents/extract` | Standalone OCR text extraction and structured field parsing. |
-| `POST` | `/api/documents/validate` | Standalone format, checksum, and date validation for a given document type and field dictionary. |
-| `POST` | `/api/tampering/analyze` | Standalone 5-signal forensic tampering and anomaly detection. |
-| `POST` | `/api/face/verify` | Standalone biometric face verification comparing a document photo and selfie. |
-| `POST` | `/api/identity/compare` | Standalone cross-document consistency check across 2+ document field dictionaries. |
-| `GET`  | `/api/screenings` | Retrieves past screening records and dashboard summary statistics. |
-| `GET`  | `/api/screenings/{id}` | Retrieves full stored forensic report for a specific screening ID. |
-| `GET`  | `/api/demo/scenarios` | Lists all bundled synthetic demo scenarios. |
-| `POST` | `/api/demo/seed/{scenario_id}` | Runs a bundled synthetic demo scenario through the full pipeline. |
+| `POST` | `/api/screen` | **Full Screening Pipeline**: Ingests 1+ document files and an optional selfie photo, returning the comprehensive risk assessment. |
+| `GET`  | `/api/screenings` | Retrieves past screening audit records and dashboard summary statistics. |
+| `GET`  | `/api/screenings/{id}` | Retrieves full stored forensic and biometric report for a specific screening. |
+| `GET`  | `/api/demo/scenarios` | Lists all pre-configured synthetic demo scenarios. |
+| `POST` | `/api/demo/seed/{scenario_id}` | Runs a bundled synthetic demo scenario through the live pipeline. |
 | `GET`  | `/api/system/info` | Returns system metadata, active risk weights, supported document types, and disclaimers. |
-| `GET`  | `/api/health` | Health check endpoint returning `{"status": "healthy"}`. |
-| `GET`  | `/` | Root endpoint returning application name, version, demo status, and disclaimer. |
+
+> **Diagnostic Routes**: Individual standalone endpoints for isolated OCR extraction (`/api/documents/extract`), document classification (`/api/documents/detect`), tampering analysis (`/api/tampering/analyze`), and face matching (`/api/face/verify`) are also available for inspection in Swagger UI.
 
 ---
 
@@ -497,11 +420,11 @@ The tampering service (`backend/app/services/tampering_service.py`) calculates a
 
 $$\text{Tampering Score} = 0.35 \times S_{\text{ELA}} + 0.20 \times S_{\text{Noise}} + 0.20 \times S_{\text{CopyMove}} + 0.15 \times S_{\text{Boundary}} + 0.10 \times S_{\text{Metadata}}$$
 
-- **Error Level Analysis (ELA) [35%]**: Re-saves the image as JPEG at Q=90 and calculates absolute pixel error against the original. Evaluates contrast between top 5th percentile error pixels (`p95`) and median error (`p50`). Identifies localized hotspot contours (area ≥ 150 px).
-- **Noise Inconsistency [20%]**: Subdivides the image into a 4x4 grid. Computes high-frequency residual standard deviation via 3x3 median blur subtraction, scoring the coefficient of variation across cells.
-- **Copy-Move Duplication [20%]**: Evaluates 16x16 pixel blocks (stride 16) with variance ≥ 6.0, downsamples to 4x4 descriptors, and counts matching block pairs separated by spatial distance ≥ 48 px.
-- **Boundary Analysis [15%]**: Canny edge detection (thresholds 80, 200) seeking portrait-sized rectangular contours (2%–25% of image area, aspect ratio 0.6–1.1) with sharpness score > 92.
-- **Metadata Inspection [10%]**: Evaluates EXIF tags for absence (common in screenshots) or presence of known editing tools (Photoshop, GIMP, Paint.NET, Affinity, Pixlr).
+- **Error Level Analysis (ELA) [35%]**: Identifies localized JPEG re-compression discrepancies and isolates tampering hotspot contours.
+- **Noise Inconsistency [20%]**: Evaluates high-frequency Laplacian noise variance across a 4x4 spatial grid to detect spliced regions.
+- **Copy-Move Duplication [20%]**: Detects duplicated textures and cloned image segments via sliding block-descriptor matching.
+- **Photograph Boundary Analysis [15%]**: Evaluates rectangular edge sharpness and seam continuity around portrait photograph regions.
+- **Metadata Inspection [10%]**: Analyzes EXIF tags for editing software signatures (Photoshop, GIMP, Paint.NET) or metadata stripping.
 
 Score Bands: **LOW** (< 25), **MEDIUM** (25–54.9), **HIGH** (≥ 55).
 
