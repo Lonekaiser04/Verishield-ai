@@ -1,0 +1,36 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# System dependencies needed by OpenCV, PaddleOCR, and PyMuPDF
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1 \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    ffmpeg \
+    fonts-dejavu-core \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY backend/requirements.txt .
+
+# Install without the heavyweight OCR/face packages by default so the
+# image builds quickly in constrained hackathon/demo environments; the
+# app runs correctly in DEMO_MODE via the documented fallbacks in
+# app/services/ocr_service.py and app/services/face_service.py.
+# Uncomment the paddleocr/paddlepaddle/deepface lines in requirements.txt
+# (or pip install them here) for real OCR + face verification.
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY backend/ .
+COPY datasets/ /app/datasets/
+
+RUN mkdir -p /app/app/uploads_tmp /app/app/database
+
+EXPOSE 8000
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

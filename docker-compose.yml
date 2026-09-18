@@ -1,0 +1,51 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    container_name: verishield-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - DEMO_MODE=true
+      - DATABASE_URL=sqlite:///./app/database/screening.db
+      - UPLOAD_DIR=./app/uploads_tmp
+      - AUTO_DELETE_UPLOADS=true
+      - MAX_UPLOAD_MB=15
+      - CORS_ORIGINS=http://localhost:5173,http://localhost:8080,http://localhost
+      - OCR_LANG=en
+      - USE_GPU=false
+      - FACE_MATCH_THRESHOLD=70
+      - FACE_REVIEW_THRESHOLD=50
+      - RISK_WEIGHT_OCR_CONFIDENCE=10
+      - RISK_WEIGHT_VALIDATION=20
+      - RISK_WEIGHT_EXPIRY=10
+      - RISK_WEIGHT_TAMPERING=30
+      - RISK_WEIGHT_FACE=15
+      - RISK_WEIGHT_CROSS_DOC=15
+      - RISK_LOW_MAX=30
+      - RISK_MEDIUM_MAX=60
+      - CLASSIFIER_CONFIDENCE_THRESHOLD=0.55
+    volumes:
+      - backend_db:/app/app/database
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    container_name: verishield-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  backend_db:

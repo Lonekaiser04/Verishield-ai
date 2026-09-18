@@ -1,0 +1,30 @@
+# --- Core web framework ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+pydantic==2.10.4
+
+# --- Database ---
+sqlalchemy==2.0.36
+# psycopg2-binary==2.9.10   # uncomment to use PostgreSQL instead of SQLite
+
+# --- Image processing / computer vision ---
+opencv-python-headless==4.10.0.84
+numpy==1.26.4
+Pillow==11.0.0
+PyMuPDF==1.25.1          # PDF page rendering support
+
+# --- OCR ---
+# PaddleOCR is heavyweight (~100-300MB of model downloads on first run).
+# The application runs correctly WITHOUT it via a documented fallback
+# path in app/services/ocr_service.py (demo scenarios + honest empty
+# result for unrecognized uploads). Install for real OCR extraction:
+paddleocr==2.9.1
+paddlepaddle==2.6.2
+
+# --- Face verification (optional, see app/services/face_service.py fallback) ---
+# deepface==0.0.93
+# tf-keras==2.18.0
+
+# --- Utilities ---
+python-dotenv==1.0.1
