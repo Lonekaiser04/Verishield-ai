@@ -1,8 +1,21 @@
 # AI-Based Fake Identity and Document Screening System
 
-> **VeriShield AI** — An explainable, multi-document preliminary screening and anomaly detection system.  
-> Developed for **Smart India Hackathon (SIH) 2026**.
+> **VeriShield AI** — An explainable, multi-document forensic screening and anomaly detection system.  
+> Developed for **Smart India Hackathon (SIH) 2026** under the **Ministry of Home Affairs**.
 
+| Parameter | Specification |
+|---|---|
+| **Initiative** | **Smart India Hackathon 2026 (SIH 2026)** |
+| **Problem Statement** | **PS 26188** |
+| **Problem Title** | **AI-Based Fake Identity and Document Screening System** |
+| **Nodal Ministry** | **Ministry of Home Affairs** |
+| **Team Name** | **HackHive** |
+| **Team Lead** | **Kaiser Mohiuddin** |
+
+[![SIH 2026](https://img.shields.io/badge/SIH-2026-orange.svg?style=flat&logoColor=white)](https://www.sih.gov.in/)
+[![Problem Statement: PS 26188](https://img.shields.io/badge/Problem%20Statement-PS%2026188-blue.svg?style=flat)](https://www.sih.gov.in/)
+[![Ministry: MHA](https://img.shields.io/badge/Ministry-Home%20Affairs-000080.svg?style=flat)](https://www.mha.gov.in/)
+[![Team: HackHive](https://img.shields.io/badge/Team-HackHive-7952B3.svg?style=flat)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -20,30 +33,45 @@
 
 ## Table of Contents
 
-1. [Project Overview and Problem](#project-overview-and-problem)
-2. [Proposed Solution](#proposed-solution)
-3. [Features](#features)
-4. [Complete Architecture and Workflow](#complete-architecture-and-workflow)
+1. [Smart India Hackathon 2026 Context](#smart-india-hackathon-2026-context)
+2. [Project Overview and Problem](#project-overview-and-problem)
+3. [Proposed Solution](#proposed-solution)
+4. [Features](#features)
+5. [Complete Architecture and Workflow](#complete-architecture-and-workflow)
    - [End-to-End Processing Pipeline](#end-to-end-processing-pipeline)
    - [Repository Layout](#repository-layout)
-5. [Actual Technology Stack](#actual-technology-stack)
-6. [Installation and Setup](#installation-and-setup)
+6. [Actual Technology Stack](#actual-technology-stack)
+7. [Installation and Setup](#installation-and-setup)
    - [Prerequisites](#prerequisites)
    - [Backend Setup](#backend-setup)
    - [Frontend Setup](#frontend-setup)
    - [Docker Setup](#docker-setup)
-7. [API Endpoints](#api-endpoints)
-8. [Demo Mode](#demo-mode)
-9. [Dataset](#dataset)
-10. [Risk Scoring and Forensics](#risk-scoring-and-forensics)
+8. [API Endpoints](#api-endpoints)
+9. [Demo Mode](#demo-mode)
+10. [Dataset](#dataset)
+11. [Risk Scoring and Forensics](#risk-scoring-and-forensics)
     - [5-Signal Tampering Analysis](#5-signal-tampering-analysis)
     - [3-Stage Face Verification](#3-stage-face-verification)
     - [Cross-Document Consistency Engine](#cross-document-consistency-engine)
     - [Weighted Scoring and Escalation Rules](#weighted-scoring-and-escalation-rules)
-11. [Privacy and Security](#privacy-and-security)
-12. [Limitations](#limitations)
-13. [Future Roadmap](#future-roadmap)
-14. [Team HackHive](#team-hackhive)
+12. [Privacy and Security](#privacy-and-security)
+13. [Limitations](#limitations)
+14. [Future Roadmap](#future-roadmap)
+15. [Team HackHive](#team-hackhive)
+16. [License](#license)
+
+---
+
+## Smart India Hackathon 2026 Context
+
+VeriShield AI has been engineered by **Team HackHive** for **Smart India Hackathon 2026 (SIH 2026)** to address **Problem Statement PS 26188** posed by the **Ministry of Home Affairs**.
+
+* **Problem Statement ID**: PS 26188
+* **Title**: AI-Based Fake Identity and Document Screening System
+* **Domain**: National Security, Civic Governance & Document Fraud Detection
+* **Submitted By**: Team HackHive (Lead: Kaiser Mohiuddin)
+
+The system addresses the critical mandate of screening potentially forged, tampered, or mismatched identity credentials before verification officers grant manual clearances, functioning as an on-premise, secure, and privacy-respecting preliminary decision-support assistant.
 
 ---
 
@@ -548,12 +576,16 @@ A case is automatically escalated to **HIGH RISK** regardless of the numerical t
 
 ## Team HackHive
 
-* Kaiser Mohiuddin — Team Lead
-* Nawazish Nabi
-* Nabeel Mushtaq
-* Ovais Shabir Sheirgojrie
-* Suhani Mahajan
-* Md Altabuddin
+Developed by **Team HackHive** for **Smart India Hackathon 2026 (SIH 2026)** under **Problem Statement: PS 26188** (**Ministry of Home Affairs**):
+
+| Team Member | Role / Designation |
+|---|---|
+| **Kaiser Mohiuddin** | **Team Lead** |
+| **Nawazish Nabi** | Team Member |
+| **Nabeel Mushtaq** | Team Member |
+| **Ovais Shabir Sheirgojrie** | Team Member |
+| **Suhani Mahajan** | Team Member |
+| **Md Altabuddin** | Team Member |
 
 ---
 
